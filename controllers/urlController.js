@@ -31,16 +31,15 @@ const shortenUrl = async (req, res) => {
         const shortUrl = `${process.env.BASE_URL}/${urlCode}`;
 
         url = await Url.create({
-                longUrl,
-                shortUrl,
-                urlCode,
+            longUrl,
+            shortUrl,
+            urlCode,
         });
-        
+
         res.status(201).json({ success: true, data: url });
 
     } catch (err) {
         console.error("Database error:", err);
-
         res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 };
