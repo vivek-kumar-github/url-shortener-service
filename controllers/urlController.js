@@ -44,6 +44,21 @@ const shortenUrl = async (req, res) => {
     }
 };
 
+/**
+ * @desc   Find a URL by its short code and redirect the user.
+ * @route  GET /:code
+ * @access Public
+ */
+const redirectToUrl = async (req, res) => {
+    const { code } = req.params;
+    res.status(200).json({
+        success: true,
+        message: "Redirect controller is now connected",
+        capturedCode: code,
+    });
+};
+
 module.exports = {
     shortenUrl,
+    redirectToUrl,
 }
