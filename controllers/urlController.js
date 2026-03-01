@@ -9,7 +9,6 @@ const Url = require("../models/Url");
 
 const shortenUrl = async (req, res) => {
     const { longUrl } = req.body;
-    console.log("Recieved long URL: ", longUrl);
 
     if (!longUrl) {
         return res.status(400).json({ success: false, error: "Please provide a URL" });
@@ -20,16 +19,31 @@ const shortenUrl = async (req, res) => {
     }
 
     try {
-        let url = await Url.findOne({longUrl: longUrl });
+        let url = await Url.findOne({ longUrl: longUrl });
+
         if (url) {
             return res.status(200).json({ success: true, data: url });
         }
 
-        res.status(200).json({ success: true, message: "URL is new and valid."});
-        
+        const { nanoid } = await import("nanoid"); //Dynamic import
+
+        const urlCode = nanoid(7);
+
+        const shortUrl = `${process.env.BASE_URL}/${urlCode}`;
+
+        res.status(200).json({
+            success: true,
+            message: "Code generated successfully.",
+            data: {
+                longUrl,
+                shortUrl,
+                urlCode,
+            },
+        });
+
     } catch (err) {
         console.error("Database error:", err);
-        
+
         res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 };
