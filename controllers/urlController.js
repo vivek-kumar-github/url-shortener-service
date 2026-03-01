@@ -19,27 +19,24 @@ const shortenUrl = async (req, res) => {
     }
 
     try {
-        let url = await Url.findOne({ longUrl: longUrl });
+        let url = await Url.findOne({ longUrl });
 
         if (url) {
             return res.status(200).json({ success: true, data: url });
         }
 
         const { nanoid } = await import("nanoid"); //Dynamic import
-
         const urlCode = nanoid(7);
 
         const shortUrl = `${process.env.BASE_URL}/${urlCode}`;
 
-        res.status(200).json({
-            success: true,
-            message: "Code generated successfully.",
-            data: {
+        url = await Url.create({
                 longUrl,
                 shortUrl,
                 urlCode,
-            },
         });
+        
+        res.status(201).json({ success: true, data: url });
 
     } catch (err) {
         console.error("Database error:", err);
