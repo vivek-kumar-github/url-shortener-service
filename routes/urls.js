@@ -1,4 +1,5 @@
 const express = require("express");
+const { shortenUrl } = require("../controllers/urlController");
 
 const router = express.Router();
 
@@ -7,8 +8,6 @@ const router = express.Router();
  * @desc   Create a new short URL
  * @access Public
  */
-router.post("/shorten",(req, res) => {
-    res.status(200).json({success: true, message: "Route is working!..."});
-});
+router.post("/shorten", shortenUrl);
 
 module.exports = router;
