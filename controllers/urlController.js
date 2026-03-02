@@ -54,15 +54,11 @@ const redirectToUrl = async (req, res) => {
         const url = await Url.findOne({ urlCode: req.params.code });
 
         if (url) {
-            
+
             url.clicks++;
             await url.save();
 
-            return res.status(200).json({
-                success: true,
-                message: "URL found successfully, click count saved to database",
-                data: url
-            });
+            return res.redirect(301, url.longUrl);
         } else {
             return res.status(400).json({ success: false, error: "No URL found" });
         }
