@@ -50,12 +50,22 @@ const shortenUrl = async (req, res) => {
  * @access Public
  */
 const redirectToUrl = async (req, res) => {
-    const { code } = req.params;
-    res.status(200).json({
-        success: true,
-        message: "Redirect controller is now connected",
-        capturedCode: code,
-    });
+    try {
+        const url = await Url.findOne({ urlCode: req.params.code });
+
+        if (url) {
+            return res.status(200).json({
+                success: true,
+                message: "URL found successfully",
+                data: url
+            });
+        } else {
+            return res.status(400).json({ success: false, error: "No URL found" });
+        }
+    } catch (err) {
+        console.error("Server error on redirect: ", err);
+        res.status(500).json({ success: false, error: "Internal server error" });
+    }
 };
 
 module.exports = {
