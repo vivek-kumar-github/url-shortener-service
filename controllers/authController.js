@@ -45,6 +45,36 @@ const registerUser = async (req, res) => {
     }
 };
 
+/**
+ * @desc   Authenticate a user and get a token
+ * @route  POST /api/auth/login
+ * @access Public
+ */
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: "Please provide an email and password" });
+        }
+        
+        const user = await User.findOne({ email }).select("+password");
+
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(400).json({ success: false, error: "Invalid credentials" });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Login successful.",
+        });
+    } catch (err) {
+        console.error("Login error: ", err);
+        res.status(500).json({ success: false, error: "Internal server error" });
+    }
+};
+
 module.exports = {
     registerUser,
+    loginUser,
 };
