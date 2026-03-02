@@ -54,9 +54,13 @@ const redirectToUrl = async (req, res) => {
         const url = await Url.findOne({ urlCode: req.params.code });
 
         if (url) {
+            
+            url.clicks++;
+            await url.save();
+
             return res.status(200).json({
                 success: true,
-                message: "URL found successfully",
+                message: "URL found successfully, click count saved to database",
                 data: url
             });
         } else {
