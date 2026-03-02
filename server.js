@@ -9,6 +9,9 @@ app.use(express.json());
 const urlRoutes = require("./routes/urls");
 app.use("/api", urlRoutes);
 
+const authRoutes = require("./routes/auth");
+app.use("/api/auth", authRoutes);
+
 const indexRoutes = require("./routes/index");
 app.use("/", indexRoutes);
 
