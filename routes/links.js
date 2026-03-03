@@ -1,4 +1,6 @@
 const express = require("express");
+const auth = require("../middleware/auth");
+const { getMyLinks } = require("../controllers/linksController");
 
 const router = express.Router();
 
@@ -7,9 +9,6 @@ const router = express.Router();
  * @desc   Get all links created by the logged-in user
  * @access Private
  */
-router.get("/my-links", (req, res) => {
-
-    res.status(200).json({ success: true, message: "Links route is working." });
-});
+router.get("/my-links", auth, getMyLinks);
 
 module.exports = router;
