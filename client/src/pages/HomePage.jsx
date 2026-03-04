@@ -6,15 +6,20 @@ const HomePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("URL to be shortened: ", longUrl);
+
+        if (longUrl) {
+            console.log("URL to be shortened: ", longUrl);
+        } else {
+            console.log("Please enter an URL");
+        }
     };
 
     return (
-        <div>
+        <div className="homepage-container">
             <h2>URL Shortener</h2>
             <p>Enter a long URL to make it short and easy to share!</p>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label htmlFor="longUrl-input">Your Long URL:</label>
                     <input
                         id="longUrl-input"
@@ -25,7 +30,7 @@ const HomePage = () => {
                         required
                     />
                 </div>
-                <button type="submit">Shorten</button>
+                <button type="submit" className="btn">Shorten</button>
             </form>
         </div>
     );
