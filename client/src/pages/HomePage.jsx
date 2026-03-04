@@ -1,16 +1,25 @@
 import React, { useState } from "react";
+import { createShortUrl } from "../services/apiService";
 
 const HomePage = () => {
 
     const [longUrl, setLongUrl] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (longUrl) {
-            console.log("URL to be shortened: ", longUrl);
-        } else {
-            console.log("Please enter an URL");
+        if (!longUrl) {
+            alert("Please enter a URL to shorten.");
+            return;
+        }
+
+        try {
+            const response = await createShortUrl(longUrl);
+
+            console.log("Successfully created short URL: ", response);
+        } catch (error) {
+            console.error("Error from API: ", error);
+            alert(`Error: ${error.error || "Something went wrong!"}`);
         }
     };
 
