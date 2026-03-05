@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "/api/auth";
+const API_URL = "/api/auth/";
 
 /**
  * @desc    Register a new user by sending their data to the backend

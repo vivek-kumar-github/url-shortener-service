@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { loginUser } from "../services/authService";
+
 
 const LoginPage = () => {
 
@@ -8,6 +10,8 @@ const LoginPage = () => {
         password: "",
     });
 
+    const [error, setError] = useState("");
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -15,9 +19,25 @@ const LoginPage = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Logging in with: ", formData);
+        setError("");
+
+        if (!formData.email || !formData.password) {
+            setError("Both email and password are required.");
+            return;
+        }
+
+        try {
+            const response = await loginUser(formData);
+
+            console.log("Login successful, token received: ", response.token);
+            alert("Login successful! check console for token.");
+        } catch (err) {
+            const errorMessage = err.error || "Login failed. Please check your credentials.";
+            setError(errorMessage);
+            console.error("Login error: ", err);
+        }
     };
 
     return (
@@ -54,6 +74,8 @@ const LoginPage = () => {
 
                 <button type="submit" className="btn">Login</button>
             </form>
+
+            {error && <p className="error-message" style={{ color: "red" }}>{error}</p>}
 
             <p className="auth-switch">
                 Don't have an account? <Link to="/register">Register now</Link>
