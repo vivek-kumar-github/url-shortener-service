@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
 
 
@@ -11,6 +11,8 @@ const LoginPage = () => {
     });
 
     const [error, setError] = useState("");
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({
@@ -31,8 +33,14 @@ const LoginPage = () => {
         try {
             const response = await loginUser(formData);
 
-            console.log("Login successful, token received: ", response.token);
-            alert("Login successful! check console for token.");
+            if (response.token) {
+                localStorage.setItem("token", response.token);
+                console.log("Token successfully stored in localstorage");
+                navigate("/dashboard");
+            } else {
+                setError("Login successfull, but no token provided.");
+            }
+
         } catch (err) {
             const errorMessage = err.error || "Login failed. Please check your credentials.";
             setError(errorMessage);
