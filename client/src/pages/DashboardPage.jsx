@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { getUserLinks } from "../services/linkService";
 
 const DashboardPage = () => {
-
-    const { logout } = useAuth();
+    const [links, setLinks] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
+    const { token, logout } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchLinks = async () => {
+            try {
+                if (token) {
+                    const response = await getUserLinks(token);
+                    setLinks(response.data);
+                }
+            } catch (err) {
+                console.error("Failed to fetch links:", err);
+                const errorMessage = err.data || "Could not load your links.";
+                setError(errorMessage);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchLinks();
+    }, [token]);
 
     const handleLogout = () => {
         logout();
