@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 
 const LoginPage = () => {
@@ -12,6 +13,7 @@ const LoginPage = () => {
 
     const [error, setError] = useState("");
 
+    const {login} = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -34,11 +36,10 @@ const LoginPage = () => {
             const response = await loginUser(formData);
 
             if (response.token) {
-                localStorage.setItem("token", response.token);
-                console.log("Token successfully stored in localstorage");
+                login(response.token);
                 navigate("/dashboard");
             } else {
-                setError("Login successfull, but no token provided.");
+                setError("Login successful, but no token provided.");
             }
 
         } catch (err) {
