@@ -5,6 +5,7 @@ const HomePage = () => {
 
     const [longUrl, setLongUrl] = useState("");
     const [shortUrlData, setShortUrlData] = useState(null);
+    const [isCopied, setIsCopied] = useState(false);
     const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
@@ -25,6 +26,18 @@ const HomePage = () => {
             setError(errorMessage);
             setShortUrlData(null);
             console.error("Error from API: ", err);
+        }
+    };
+
+    const handleCopy = async () => {
+        if (!shortUrlData?.shortUrl) return;
+
+        try {
+            await navigator.clipboard.writeText(shortUrlData.shortUrl);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        } catch (err) {
+            console.error("Failed to copy URL: ", err);
         }
     };
 
@@ -59,15 +72,20 @@ const HomePage = () => {
                     <p>
                         <strong>Short Link:</strong>
                         <a
-                        href={shortUrlData.shortUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ marginLeft: "0.5rem", fontWeight: "bold", color: "#007bff" }}
+                            href={shortUrlData.shortUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ marginLeft: "0.5rem", fontWeight: "bold", color: "#007bff" }}
                         >
                             {shortUrlData.shortUrl}
                         </a>
-                        <button type="button" className="btn btn-copy">
-                            Copy
+                        <button
+                            type="button"
+                            className="btn btn-copy"
+                            onClick={handleCopy}
+                            style={{ marginLeft: "0.75rem" }}
+                        >
+                            {isCopied ? "Copied" : "Copy"}
                         </button>
                     </p>
                     <p style={{ fontSize: "0.8rem", color: "#555"}}>

@@ -7,6 +7,7 @@ const DashboardPage = () => {
     const [links, setLinks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+    const [copiedId, setCopiedId] = useState(null);
     const { token, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -38,13 +39,13 @@ const DashboardPage = () => {
         navigate("/login");
     };
 
-    const handleCopy = async (text) => {
+    const handleCopy = async (id, text) => {
         try {
             await navigator.clipboard.writeText(text);
-            alert("URL copied to clipboard!");
+            setCopiedId(id);
+            setTimeout(() => setCopiedId(null), 2000);
         } catch (err) {
             console.error("Failed to copy URL: ", err);
-            alert("Failed to copy URL.");
         }
     }
 
@@ -91,9 +92,9 @@ const DashboardPage = () => {
                                                 <button
                                                     type="button"
                                                     className="btn btn-copy btn-small"
-                                                    onClick={() => handleCopy(link.shortUrl)}
+                                                    onClick={() => handleCopy(link._id, link.shortUrl)}
                                                 >
-                                                    Copy
+                                                    {copiedId === link._id ? "Copied" : "Copy"}
                                                 </button>
                                             </td>
                                         </tr>
