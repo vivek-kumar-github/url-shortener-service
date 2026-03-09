@@ -38,6 +38,16 @@ const DashboardPage = () => {
         navigate("/login");
     };
 
+    const handleCopy = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            alert("URL copied to clipboard!");
+        } catch (err) {
+            console.error("Failed to copy URL: ", err);
+            alert("Failed to copy URL.");
+        }
+    }
+
     return (
         <div className="dashboard-container">
             <h2>My Dashboard</h2>
@@ -56,6 +66,7 @@ const DashboardPage = () => {
                                         <th style={{ padding: "8px", textAlign: "left" }}>Original URL</th>
                                         <th style={{ padding: "8px", textAlign: "left" }}>Short URL</th>
                                         <th style={{ padding: "8px", textAlign: "left" }}>Clicks</th>
+                                        <th style={{ padding: "8px", textAlign: "left" }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,6 +86,15 @@ const DashboardPage = () => {
                                             </td>
                                             <td style={{ padding: "8px", textAlign: "center" }}>
                                                 {link.clicks}
+                                            </td>
+                                            <td style={{ padding: "8px" }}>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-copy btn-small"
+                                                    onClick={() => handleCopy(link.shortUrl)}
+                                                >
+                                                    Copy
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}

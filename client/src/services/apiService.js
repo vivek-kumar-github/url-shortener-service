@@ -7,7 +7,15 @@ import axios from "axios";
  */
 export const createShortUrl = async (longUrl) => {
     try {
-        const response = await axios.post("/api/shorten", { longUrl });
+        // const response = await axios.post("/api/shorten", { longUrl });
+        // return response.data;
+
+        const token = localStorage.getItem("token");
+        const config = token
+            ? { headers: { "x-auth-token": token } }
+            : {};
+
+        const response = await axios.post("/api/shorten", { longUrl }, config);
         return response.data;
     } catch (error) {
         console.error("API Error: Failed to create short URL ", error);

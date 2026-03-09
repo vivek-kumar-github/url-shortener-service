@@ -66,6 +66,9 @@ const HomePage = () => {
                         >
                             {shortUrlData.shortUrl}
                         </a>
+                        <button type="button" className="btn btn-copy">
+                            Copy
+                        </button>
                     </p>
                     <p style={{ fontSize: "0.8rem", color: "#555"}}>
                         Original URL: {shortUrlData.longUrl.substring(0, 70)}...

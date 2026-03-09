@@ -11,7 +11,8 @@ const API_URL = "/api/links/";
 export const getUserLinks = async (token) => {
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
+            "x-auth-token": token,
         },
     };
 
