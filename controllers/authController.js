@@ -85,7 +85,39 @@ const loginUser = async (req, res) => {
     }
 };
 
+/**
+ * @desc   Get current authenticated user
+ * @route  GET /api/auth/me
+ * @access Private
+ */
+const getCurrentUser = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ success: false, error: "Not authenticated" });
+        }
+
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ success: false, error: "User not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+            },
+        });
+    } catch (err) {
+        console.error("Error fetching current user: ", err);
+        res.status(500).json({ success: false, error: "Internal server error" });
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
+    getCurrentUser,
 };

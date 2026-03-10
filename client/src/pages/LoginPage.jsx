@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../services/authService";
+import { loginUser, getCurrentUser } from "../services/authService";
 import { useAuth } from "../context/useAuth";
 import Spinner from "../components/Spinner";
 
@@ -37,7 +37,11 @@ const LoginPage = () => {
             const response = await loginUser(formData);
 
             if (response.token) {
-                login(response.token);
+                // Fetch current user data
+                const userResponse = await getCurrentUser(response.token);
+                
+                // Login with both token and user data
+                login(response.token, userResponse.data);
                 navigate("/dashboard");
             } else {
                 setError("Login successful, but no token provided.");

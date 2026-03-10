@@ -4,7 +4,7 @@ import { useAuth } from "../context/useAuth";
 import './Navbar.css';
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -36,6 +36,9 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>
+            <li className="user-info">
+              <span>Welcome, {user?.name || 'User'}</span>
+            </li>
             <li>
               <button onClick={handleLogout} className='btn-logout-nav'>
                 Logout

@@ -95,6 +95,13 @@
   box-shadow: var(--shadow);
 }
 
+.user-info {
+  padding: 0.5rem 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  font-size: var(--font-size-base);
+}
+
 /* Mobile menu */
 .navbar-toggle {
   display: none;
