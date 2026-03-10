@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Spinner from "./Spinner";
 
 /**
  * @param {object} props - The component's props
@@ -11,7 +12,11 @@ const PrivateRoute = ({ children }) => {
     const { isAuthenticated, isLoading } = useAuth();
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return (
+            <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+                <Spinner />
+            </div>
+        );
     }
 
     if (isAuthenticated) {

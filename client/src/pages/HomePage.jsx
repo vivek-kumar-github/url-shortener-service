@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createShortUrl } from "../services/apiService";
+import Spinner from "../components/Spinner";
 
 const HomePage = () => {
 
@@ -7,6 +8,7 @@ const HomePage = () => {
     const [shortUrlData, setShortUrlData] = useState(null);
     const [isCopied, setIsCopied] = useState(false);
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +21,7 @@ const HomePage = () => {
 
         try {
             setError("");
+            setIsLoading(true);
             const response = await createShortUrl(longUrl);
             setShortUrlData(response.data);
         } catch (err) {
@@ -26,6 +29,8 @@ const HomePage = () => {
             setError(errorMessage);
             setShortUrlData(null);
             console.error("Error from API: ", err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -57,7 +62,15 @@ const HomePage = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="btn">Shorten</button>
+                <button
+                    type="submit"
+                    className="btn"
+                    disabled={isLoading}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", justifyContent: "center" }}
+                >
+                    {isLoading && <Spinner size="small" />}
+                    {isLoading ? "Shortening..." : "Shorten"}
+                </button>
             </form>
 
             {error && (

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getUserLinks } from "../services/linkService";
+import Spinner from "../components/Spinner";
 
 const DashboardPage = () => {
     const [links, setLinks] = useState([]);
@@ -55,7 +56,9 @@ const DashboardPage = () => {
             <p>Welcome! Here are all the links you have created.</p>
             <div className="links-list-container" style={{ marginTop: "2rem" }}>
                 {isLoading ? (
-                    <p>Loading your links...</p>
+                    <div style={{ display: "flex", justifyContent: "center", padding: "1rem" }}>
+                        <Spinner />
+                    </div>
                 ) :
                     error ? (
                         <p className="error-message" style={{ color: "red" }}>Error: {error}</p>

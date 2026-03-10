@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { registerUser } from "../services/authService";
+import Spinner from "../components/Spinner";
 
 const RegisterPage = () => {
 
@@ -12,6 +13,7 @@ const RegisterPage = () => {
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -32,6 +34,7 @@ const RegisterPage = () => {
         }
 
         try {
+            setIsSubmitting(true);
             const response = await registerUser(formData);
 
             console.log("Registration successful: ", response);
@@ -42,6 +45,8 @@ const RegisterPage = () => {
             const errorMessage = err.error || "Registration failed. Please try again.";
             setError(errorMessage);
             console.error("Registration error: ", err);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -89,7 +94,15 @@ const RegisterPage = () => {
                     />
                 </div>
 
-                <button type="submit" className="btn">Register</button>
+                <button
+                    type="submit"
+                    className="btn"
+                    disabled={isSubmitting}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", justifyContent: "center" }}
+                >
+                    {isSubmitting && <Spinner size="small" />}
+                    {isSubmitting ? "Registering..." : "Register"}
+                </button>
             </form>
 
             {error && <p className="error-message" style={{ color: "red" }}>{error}</p>}
