@@ -11,7 +11,6 @@ const API_URL = "/api/links/";
 export const getUserLinks = async (token) => {
     const config = {
         headers: {
-            // Authorization: `Bearer ${token}`,
             "x-auth-token": token,
         },
     };
@@ -22,7 +21,6 @@ export const getUserLinks = async (token) => {
     } catch (error) {
         console.log("API Error: Failed to fetch user links", error);
         if (error.response && error.response.data) {
-            // Throw the error data with status for easier handling
             const errorData = {
                 ...error.response.data,
                 status: error.response.status

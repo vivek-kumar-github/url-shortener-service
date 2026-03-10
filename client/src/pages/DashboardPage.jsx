@@ -70,6 +70,9 @@ const DashboardPage = () => {
                         <p className="text-secondary mb-0">Manage and track all your shortened links</p>
                     </div>
                     <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                        <button onClick={() => navigate("/")} className="btn btn-success btn-small">
+                            ➕ Create New Link
+                        </button>
                         <button onClick={handleRefresh} className="btn btn-secondary btn-small">
                             🔄 Refresh
                         </button>

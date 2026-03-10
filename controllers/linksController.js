@@ -1,8 +1,8 @@
 const Url = require("../models/Url");
 
 /**
- * @desc Get all links created by the currently logged-in user
- * @route GET /api/links/my-links
+ * @desc   Get all links created by the currently logged-in user
+ * @route  GET /api/links/my-links
  * @access Private
  */
 const getMyLinks = async (req, res) => {

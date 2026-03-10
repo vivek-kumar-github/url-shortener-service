@@ -1,15 +1,12 @@
 import axios from "axios";
 
 /**
- * @desc Sends a long URL to the backend API to be shortened
- * @param {string} longUrl The URL that the user wants to shorten
+ * @desc    Sends a long URL to the backend API to be shortened
+ * @param   {string} longUrl The URL that the user wants to shorten
  * @returns {Promise<object>} A promise that resolves to the data returned from the API
  */
 export const createShortUrl = async (longUrl) => {
     try {
-        // const response = await axios.post("/api/shorten", { longUrl });
-        // return response.data;
-
         const token = localStorage.getItem("token");
         const config = token
             ? { headers: { "x-auth-token": token } }

@@ -345,6 +345,5 @@ a:hover {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Additional utility classes */
 .py-4 { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
 .link-primary { color: var(--primary-color); font-weight: 600; }

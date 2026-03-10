@@ -37,10 +37,8 @@ const LoginPage = () => {
             const response = await loginUser(formData);
 
             if (response.token) {
-                // Fetch current user data
                 const userResponse = await getCurrentUser(response.token);
                 
-                // Login with both token and user data
                 login(response.token, userResponse.data);
                 navigate("/dashboard");
             } else {

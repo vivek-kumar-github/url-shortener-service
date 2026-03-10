@@ -40,8 +40,8 @@ export const loginUser = async (credentials) => {
     }
 };
 /**
- * @desc Fetches the current authenticated user's profile
- * @param {string} token the JWT token
+ * @desc    Fetches the current authenticated user's profile
+ * @param   {string} token the JWT token
  * @returns {Promise<object>} A promise that resolves to the user data returned from the API
  */
 export const getCurrentUser = async (token) => {

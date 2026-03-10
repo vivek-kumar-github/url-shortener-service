@@ -25,7 +25,7 @@ const shortenUrl = async (req, res) => {
             return res.status(200).json({ success: true, data: url });
         }
 
-        const { nanoid } = await import("nanoid"); //Dynamic import
+        const { nanoid } = await import("nanoid");
         const urlCode = nanoid(7);
         const shortUrl = `${process.env.BASE_URL}/${urlCode}`;
 
