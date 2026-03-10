@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
 import Spinner from "../components/Spinner";
 
 const RegisterPage = () => {
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -38,7 +39,11 @@ const RegisterPage = () => {
             const response = await registerUser(formData);
 
             console.log("Registration successful: ", response);
-            setSuccess("Registration successful! Please login");
+            setSuccess("Registration successful! Redirecting to login...");
+
+            setTimeout(() => {
+                navigate("/login")
+            }, 2000);
 
             setFormData({ name: "", email: "", password: "" });
         } catch (err) {
