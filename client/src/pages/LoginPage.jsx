@@ -48,7 +48,6 @@ const LoginPage = () => {
         } catch (err) {
             const errorMessage = err.error || "Login failed. Please check your credentials.";
             setError(errorMessage);
-            console.error("Login error: ", err);
         } finally {
             setIsSubmitting(false);
         }

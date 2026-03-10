@@ -44,7 +44,6 @@ const shortenUrl = async (req, res) => {
         res.status(201).json({ success: true, data: url });
 
     } catch (err) {
-        console.error("Database error:", err);
         res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 };
@@ -68,7 +67,6 @@ const redirectToUrl = async (req, res) => {
             return res.status(404).json({ success: false, error: "No URL found" });
         }
     } catch (err) {
-        console.error("Server error on redirect: ", err);
         res.status(500).json({ success: false, error: "Internal server error" });
     }
 };

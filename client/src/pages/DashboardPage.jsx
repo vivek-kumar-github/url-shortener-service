@@ -16,10 +16,8 @@ const DashboardPage = () => {
         if (token) {
             try {
                 const response = await getUserLinks(token);
-                console.log("Response from getUserLinks:", response);
                 setLinks(response.data || []);
                 } catch (err) {
-                    console.error("Failed to fetch links:", err);
                     if (err.error === "Token is not valid" || err.status === 401) {
                         logout();
                         navigate("/login");
@@ -51,7 +49,6 @@ const DashboardPage = () => {
             setCopiedId(id);
             setTimeout(() => setCopiedId(null), 2000);
         } catch (err) {
-            console.error("Failed to copy URL: ", err);
         }
     };
 

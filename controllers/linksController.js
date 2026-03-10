@@ -19,7 +19,6 @@ const getMyLinks = async (req, res) => {
             data: links,
         });
     } catch (err) {
-        console.error("Error fetching user links: ", err);
         res.status(500).json({ success: false, error: "Internal server error" });
     }
 };

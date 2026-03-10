@@ -15,7 +15,6 @@ export const createShortUrl = async (longUrl) => {
         const response = await axios.post("/api/shorten", { longUrl }, config);
         return response.data;
     } catch (error) {
-        console.error("API Error: Failed to create short URL ", error);
         if (error.response && error.response.data) {
             throw error.response.data;
         } else {

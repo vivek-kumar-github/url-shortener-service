@@ -40,8 +40,6 @@ const registerUser = async (req, res) => {
             },
         });
     } catch (err) {
-        console.error("Registeration error: ", err);
-
         res.status(500).json({ success: false, error: "Internal server error" });
     }
 };
@@ -80,7 +78,6 @@ const loginUser = async (req, res) => {
             token: token,
         });
     } catch (err) {
-        console.error("Login error: ", err);
         res.status(500).json({ success: false, error: "Internal server error" });
     }
 };
@@ -111,7 +108,6 @@ const getCurrentUser = async (req, res) => {
             },
         });
     } catch (err) {
-        console.error("Error fetching current user: ", err);
         res.status(500).json({ success: false, error: "Internal server error" });
     }
 };

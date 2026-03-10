@@ -12,7 +12,6 @@ export const registerUser = async (userData) => {
         const response = await axios.post(API_URL + "register", userData);
         return response.data;
     } catch (error) {
-        console.error("API Error: User registration failed ", error);
         if (error.response && error.response.data) {
             throw error.response.data;
         } else {
@@ -31,7 +30,6 @@ export const loginUser = async (credentials) => {
         const response = await axios.post(API_URL + "login", credentials);
         return response.data;
     } catch (error) {
-        console.error("API Error: User login failed ", error);
         if (error.response && error.response.data) {
             throw error.response.data;
         } else {
@@ -53,7 +51,6 @@ export const getCurrentUser = async (token) => {
         });
         return response.data;
     } catch (error) {
-        console.error("API Error: Failed to fetch current user ", error);
         if (error.response && error.response.data) {
             throw error.response.data;
         } else {

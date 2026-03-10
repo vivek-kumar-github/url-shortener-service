@@ -27,7 +27,6 @@ const HomePage = () => {
             const errorMessage = err.error || "An unexpected error occurred.";
             setError(errorMessage);
             setShortUrlData(null);
-            console.error("Error from API: ", err);
         } finally {
             setIsLoading(false);
         }
@@ -41,7 +40,6 @@ const HomePage = () => {
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 2000);
         } catch (err) {
-            console.error("Failed to copy URL: ", err);
         }
     };
 

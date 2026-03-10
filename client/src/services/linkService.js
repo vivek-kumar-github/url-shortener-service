@@ -19,7 +19,6 @@ export const getUserLinks = async (token) => {
         const response = await axios.get(API_URL + 'my-links', config);
         return response.data;
     } catch (error) {
-        console.log("API Error: Failed to fetch user links", error);
         if (error.response && error.response.data) {
             const errorData = {
                 ...error.response.data,

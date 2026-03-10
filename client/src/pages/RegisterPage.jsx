@@ -38,7 +38,6 @@ const RegisterPage = () => {
             setIsSubmitting(true);
             const response = await registerUser(formData);
 
-            console.log("Registration successful: ", response);
             setSuccess("Registration successful! Redirecting to login...");
 
             setTimeout(() => {
@@ -49,7 +48,6 @@ const RegisterPage = () => {
         } catch (err) {
             const errorMessage = err.error || "Registration failed. Please try again.";
             setError(errorMessage);
-            console.error("Registration error: ", err);
         } finally {
             setIsSubmitting(false);
         }
