@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import Spinner from "../components/Spinner";
 
-
 const LoginPage = () => {
-
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -55,53 +53,63 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="auth-container">
-            <h2>Welcome Back!</h2>
-            <p>Log in to access your dashboard.</p>
-
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
+        <div className="auth-container" style={{ maxWidth: "400px", margin: "2rem auto" }}>
+            <div className="card">
+                <div className="text-center mb-4">
+                    <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔐</div>
+                    <h2 className="mb-2">Welcome Back</h2>
+                    <p className="text-secondary">Sign in to your account to continue</p>
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="email">Email Address</label>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="btn"
+                        disabled={isSubmitting}
+                        style={{ width: "100%" }}
+                    >
+                        {isSubmitting && <Spinner size="small" />}
+                        {isSubmitting ? "Signing in..." : "Sign In"}
+                    </button>
+                </form>
+
+                {error && <div className="error-message">{error}</div>}
+
+                <div className="text-center mt-4">
+                    <p className="auth-switch mb-0">
+                        Don't have an account?{" "}
+                        <Link to="/register" style={{ fontWeight: "600" }}>
+                            Create one here
+                        </Link>
+                    </p>
                 </div>
-
-                <button
-                    type="submit"
-                    className="btn"
-                    disabled={isSubmitting}
-                    style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", justifyContent: "center" }}
-                >
-                    {isSubmitting && <Spinner size="small" />}
-                    {isSubmitting ? "Logging in..." : "Login"}
-                </button>
-            </form>
-
-            {error && <p className="error-message" style={{ color: "red" }}>{error}</p>}
-
-            <p className="auth-switch">
-                Don't have an account? <Link to="/register">Register now</Link>
-            </p>
+            </div>
         </div>
     );
 };

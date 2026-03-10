@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 import { getUserLinks } from "../services/linkService";
 import Spinner from "../components/Spinner";
 
@@ -12,15 +12,20 @@ const DashboardPage = () => {
     const { token, logout } = useAuth();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchLinks = async () => {
-            if (token) {
-                try {
-                    const response = await getUserLinks(token);
-                    setLinks(response.data);
+    const fetchLinks = async () => {
+        if (token) {
+            try {
+                const response = await getUserLinks(token);
+                console.log("Response from getUserLinks:", response);
+                setLinks(response.data || []);
                 } catch (err) {
                     console.error("Failed to fetch links:", err);
-                    const errorMessage = err.data || "Could not load your links.";
+                    if (err.error === "Token is not valid" || err.status === 401) {
+                        logout();
+                        navigate("/login");
+                        return;
+                    }
+                    const errorMessage = err.data || err.error || "Could not load your links.";
                     setError(errorMessage);
                 } finally {
                     setIsLoading(false);
@@ -31,9 +36,9 @@ const DashboardPage = () => {
             }
         };
 
+    useEffect(() => {
         fetchLinks();
-
-    }, [token]);
+    }, [token, logout, navigate]);
 
     const handleLogout = () => {
         logout();
@@ -48,69 +53,118 @@ const DashboardPage = () => {
         } catch (err) {
             console.error("Failed to copy URL: ", err);
         }
-    }
+    };
+
+    const handleRefresh = async () => {
+        setIsLoading(true);
+        setError("");
+        await fetchLinks();
+    };
 
     return (
         <div className="dashboard-container">
-            <h2>My Dashboard</h2>
-            <p>Welcome! Here are all the links you have created.</p>
-            <div className="links-list-container" style={{ marginTop: "2rem" }}>
-                {isLoading ? (
-                    <div style={{ display: "flex", justifyContent: "center", padding: "1rem" }}>
-                        <Spinner />
+            <div className="card mb-4">
+                <div className="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 className="mb-1">My Dashboard</h2>
+                        <p className="text-secondary mb-0">Manage and track all your shortened links</p>
                     </div>
-                ) :
-                    error ? (
-                        <p className="error-message" style={{ color: "red" }}>Error: {error}</p>
-                    ) :
-                        links.length > 0 ? (
-                            <table className="links-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                        <button onClick={handleRefresh} className="btn btn-secondary btn-small">
+                            🔄 Refresh
+                        </button>
+                        <div style={{ fontSize: "2rem" }}>📊</div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="card">
+                <div className="card-header">
+                    <h3 className="mb-0">Your Links</h3>
+                </div>
+
+                <div className="links-list-container">
+                    {isLoading ? (
+                        <div className="text-center py-4">
+                            <Spinner />
+                            <p className="text-secondary mt-2">Loading your links...</p>
+                        </div>
+                    ) : error ? (
+                        <div className="error-message">{error}</div>
+                    ) : links.length > 0 ? (
+                        <div className="table-responsive">
+                            <table className="links-table">
                                 <thead>
-                                    <tr style={{ borderBottom: "2px solid #333" }}>
-                                        <th style={{ padding: "8px", textAlign: "left" }}>Original URL</th>
-                                        <th style={{ padding: "8px", textAlign: "left" }}>Short URL</th>
-                                        <th style={{ padding: "8px", textAlign: "left" }}>Clicks</th>
-                                        <th style={{ padding: "8px", textAlign: "left" }}>Actions</th>
+                                    <tr>
+                                        <th>Original URL</th>
+                                        <th>Short URL</th>
+                                        <th className="text-center">Clicks</th>
+                                        <th className="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {links.map((link) => (
-                                        <tr key={link._id} style={{ borderBottom: "1px solid #ddd" }}>
-                                            <td style={{ padding: "8px", wordBreak: "break-all" }}>
-                                                <a href={link.longUrl} title={link.longUrl} target="_blank" rel="noopener noreferrer">
+                                        <tr key={link._id}>
+                                            <td>
+                                                <a
+                                                    href={link.longUrl}
+                                                    title={link.longUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="link-original"
+                                                >
                                                     {link.longUrl.length > 50
                                                         ? link.longUrl.substring(0, 50) + "..."
                                                         : link.longUrl}
                                                 </a>
                                             </td>
-                                            <td style={{ padding: "8px" }}>
-                                                <a href={link.shortUrl} target="_blank" rel="noopener noreferrer">
+                                            <td>
+                                                <a
+                                                    href={link.shortUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="link-short"
+                                                >
                                                     {link.shortUrl}
                                                 </a>
                                             </td>
-                                            <td style={{ padding: "8px", textAlign: "center" }}>
-                                                {link.clicks}
+                                            <td className="text-center">
+                                                <span className="clicks-badge">{link.clicks}</span>
                                             </td>
-                                            <td style={{ padding: "8px" }}>
+                                            <td className="text-center">
                                                 <button
                                                     type="button"
-                                                    className="btn btn-copy btn-small"
+                                                    className="btn btn-secondary btn-small"
                                                     onClick={() => handleCopy(link._id, link.shortUrl)}
                                                 >
-                                                    {copiedId === link._id ? "Copied" : "Copy"}
+                                                    {copiedId === link._id ? "✓ Copied" : "Copy"}
                                                 </button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
-                        ) : (
-                            <p>You haven't created any short links yet. Go to the homepage to create your first one!</p>
-                        )}
+                        </div>
+                    ) : (
+                        <div className="text-center py-4">
+                            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🔗</div>
+                            <h3 className="mb-2">No links yet</h3>
+                            <p className="text-secondary mb-3">
+                                You haven't created any short links yet. Head to the homepage to create your first one!
+                            </p>
+                            <Link to="/" className="btn btn-primary">
+                                Create Your First Link
+                            </Link>
+                        </div>
+                    )}
+                </div>
             </div>
-            <button onClick={handleLogout} className="btn btn-logout" style={{ marginTop: "2rem" }}>
-                Logout
-            </button>
+
+            <div className="text-center mt-4">
+                <button onClick={handleLogout} className="btn btn-danger">
+                    Sign Out
+                </button>
+            </div>
         </div>
     );
 };
