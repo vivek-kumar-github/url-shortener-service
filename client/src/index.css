@@ -262,19 +262,124 @@ a:hover {
 .gap-2 { gap: var(--spacing-sm); }
 .gap-4 { gap: var(--spacing-lg); }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Responsive Design - Tablet */
+@media (max-width: 1024px) {
   .container {
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
   }
 
   h1 { font-size: var(--font-size-3xl); }
-  h2 { font-size: var(--font-size-2xl); }
+
+  .justify-between {
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 768px) {
+  :root {
+    --spacing-xl: 1.5rem;
+  }
+
+  .container {
+    padding: var(--spacing-md);
+    min-height: calc(100vh - 60px);
+  }
+
+  h1 { 
+    font-size: var(--font-size-2xl);
+    word-break: break-word;
+  }
+
+  h2 { 
+    font-size: var(--font-size-xl);
+    word-break: break-word;
+  }
+
+  h3 { font-size: var(--font-size-lg); }
+  h4 { font-size: var(--font-size-base); }
+
+  p { font-size: var(--font-size-sm); }
+
+  .card {
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .card-header {
+    margin-bottom: var(--spacing-md);
+  }
 
   .btn {
     width: 100%;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-sm);
   }
+
+  .btn-small {
+    padding: var(--spacing-sm) var(--spacing-md);
+    width: 100%;
+    font-size: var(--font-size-xs);
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  label {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  input, textarea, select {
+    padding: var(--spacing-md);
+    font-size: 16px;
+  }
+
+  .flex {
+    flex-wrap: wrap;
+  }
+
+  .justify-between {
+    flex-direction: column;
+  }
+
+  .items-center {
+    width: 100%;
+  }
+
+  .mb-4 { margin-bottom: var(--spacing-md); }
+  .mt-4 { margin-top: var(--spacing-md); }
+}
+
+/* Responsive Design - Small Mobile */
+@media (max-width: 480px) {
+  :root {
+    --spacing-lg: 1rem;
+    --spacing-md: 0.75rem;
+  }
+
+  .container {
+    padding: var(--spacing-sm);
+  }
+
+  h1 { font-size: var(--font-size-lg); }
+  h2 { font-size: var(--font-size-base); }
+  h3 { font-size: var(--font-size-sm); }
+
+  .card {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+
+  .btn {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-xs);
+    min-height: 44px;
+  }
+
+  .text-xl { font-size: var(--font-size-base); }
 }
 
 /* Table Styles */
@@ -343,7 +448,343 @@ a:hover {
 .table-responsive {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md);
+  margin: 0 -1px;
 }
 
 .py-4 { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
 .link-primary { color: var(--primary-color); font-weight: 600; }
+
+/* Mobile Table Styles */
+@media (max-width: 768px) {
+  .links-table {
+    font-size: var(--font-size-sm);
+  }
+
+  .links-table th,
+  .links-table td {
+    padding: var(--spacing-sm);
+  }
+
+  .links-table th {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .links-table {
+    font-size: var(--font-size-xs);
+  }
+
+  .links-table th,
+  .links-table td {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .link-original,
+  .link-short {
+    word-break: break-word;
+  }
+
+  .link-original {
+    max-width: 150px;
+  }
+
+  .link-short {
+    max-width: 120px;
+  }
+}
+
+/* Responsive utility improvements */
+@media (max-width: 768px) {
+  .text-xl { font-size: var(--font-size-base); }
+  .gap-4 { gap: var(--spacing-md); }
+  .gap-2 { gap: var(--spacing-sm); }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  input,
+  select,
+  textarea,
+  a {
+    font-size: 16px;
+  }
+
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Dashboard responsive styles */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+}
+
+.dashboard-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.dashboard-icon {
+  font-size: 2rem;
+  white-space: nowrap;
+}
+
+/* Grid responsive styles */
+.grid {
+  display: grid;
+}
+
+/* Feature cards */
+.feature-card {
+  text-align: center;
+}
+
+.feature-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Short URL container */
+.short-url-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: var(--bg-primary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.short-url-text {
+  flex: 1;
+  word-break: break-all;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.short-url-copy {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-buttons {
+    width: 100%;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .dashboard-buttons .btn {
+    width: 100%;
+  }
+
+  .dashboard-icon {
+    font-size: 1.5rem;
+    align-self: flex-start;
+    margin-top: var(--spacing-md);
+  }
+
+  .short-url-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-md);
+  }
+
+  .short-url-copy {
+    width: 100%;
+  }
+
+  .short-url-copy .btn {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-buttons {
+    gap: var(--spacing-sm);
+  }
+
+  .dashboard-icon {
+    font-size: 1.25rem;
+    margin-top: var(--spacing-sm);
+  }
+
+  .short-url-container {
+    padding: var(--spacing-md);
+  }
+
+  .feature-card-icon {
+    font-size: 1.5rem;
+  }
+}
+
+/* Auth forms responsive */
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 0 var(--spacing-md);
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    margin: 1rem auto;
+    max-width: 100%;
+    padding: var(--spacing-md);
+  }
+
+  .auth-container .card {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Homepage responsive */
+.homepage-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.homepage-container .card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .homepage-container .card {
+    max-width: 100%;
+  }
+}
+
+/* Text size utilities */
+.text-sm { font-size: var(--font-size-sm); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+
+.py-4 { 
+  padding-top: var(--spacing-xl); 
+  padding-bottom: var(--spacing-xl); 
+}
+
+@media (max-width: 768px) {
+  .py-4 {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+  }
+}
+
+/* Scrollable text utilities */
+@media (max-width: 480px) {
+  .text-sm { font-size: var(--font-size-xs); }
+}
+
+/* Input and form responsive */
+@media (max-width: 768px) {
+  input[type="url"],
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 16px;
+  }
+}
+
+/* Landscape mode styles for small devices */
+@media (max-height: 600px) and (orientation: landscape) {
+  .navbar {
+    min-height: 48px;
+    padding: var(--spacing-sm);
+  }
+
+  .container {
+    min-height: auto;
+    padding: var(--spacing-sm);
+  }
+
+  h1 { font-size: var(--font-size-xl); }
+  h2 { font-size: var(--font-size-lg); }
+  h3 { font-size: var(--font-size-base); }
+
+  .card {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Additional mobile optimizations */
+@media (max-width: 600px) {
+  .container {
+    padding: var(--spacing-sm);
+  }
+
+  .card {
+    padding: var(--spacing-md);
+  }
+
+  .card-header {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  p { font-size: var(--font-size-sm); }
+
+  .text-secondary { font-size: var(--font-size-xs); }
+}
+
+/* Ensure minimum touch target sizes */
+button,
+a,
+input[type="button"],
+input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.btn {
+  min-height: 44px;
+}
+
+/* Remove tap highlight color on mobile */
+a,
+button {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth scrolling for mobile */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent double-tap zoom on buttons and links */
+@media (max-width: 768px) {
+  input,
+  button,
+  a {
+    font-size: 16px !important;
+  }
+}

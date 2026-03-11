@@ -92,34 +92,26 @@ const HomePage = () => {
                         <div className="text-center">
                             <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🎉</div>
                             <h3 className="mb-3">Your Short URL is Ready!</h3>
-                            <div className="flex items-center gap-2 mb-3" style={{
-                                backgroundColor: "var(--bg-primary)",
-                                padding: "var(--spacing-md)",
-                                borderRadius: "var(--radius-md)",
-                                border: "1px solid var(--border-color)"
-                            }}>
+                            <div className="short-url-container">
                                 <a
                                     href={shortUrlData.shortUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    style={{
-                                        fontWeight: "600",
-                                        color: "var(--primary-color)",
-                                        wordBreak: "break-all",
-                                        flex: 1
-                                    }}
+                                    className="short-url-text"
                                 >
                                     {shortUrlData.shortUrl}
                                 </a>
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary btn-small"
-                                    onClick={handleCopy}
-                                >
-                                    {isCopied ? "✓ Copied" : "Copy"}
-                                </button>
+                                <div className="short-url-copy">
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary btn-small"
+                                        onClick={handleCopy}
+                                    >
+                                        {isCopied ? "✓ Copied" : "Copy"}
+                                    </button>
+                                </div>
                             </div>
-                            <p className="text-muted text-sm">
+                            <p className="text-muted text-sm" style={{ marginTop: "var(--spacing-md)" }}>
                                 Original: {shortUrlData.longUrl.substring(0, 60)}...
                             </p>
                         </div>
@@ -130,19 +122,19 @@ const HomePage = () => {
             <div className="text-center mt-4" style={{ maxWidth: "600px", margin: "0 auto" }}>
                 <div className="card" style={{ backgroundColor: "var(--bg-tertiary)" }}>
                     <h3 className="mb-2">Why Choose Short.ly?</h3>
-                    <div className="grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "var(--spacing-lg)", marginTop: "var(--spacing-lg)" }}>
-                        <div className="text-center">
-                            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>⚡</div>
+                    <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "var(--spacing-lg)", marginTop: "var(--spacing-lg)" }}>
+                        <div className="text-center feature-card">
+                            <div className="feature-card-icon">⚡</div>
                             <h4>Lightning Fast</h4>
                             <p className="text-secondary">Create short URLs in milliseconds</p>
                         </div>
-                        <div className="text-center">
-                            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>📊</div>
+                        <div className="text-center feature-card">
+                            <div className="feature-card-icon">📊</div>
                             <h4>Track Clicks</h4>
                             <p className="text-secondary">Monitor your link performance</p>
                         </div>
-                        <div className="text-center">
-                            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🔒</div>
+                        <div className="text-center feature-card">
+                            <div className="feature-card-icon">🔒</div>
                             <h4>Secure</h4>
                             <p className="text-secondary">Safe and reliable URL shortening</p>
                         </div>

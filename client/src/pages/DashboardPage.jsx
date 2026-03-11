@@ -61,19 +61,19 @@ const DashboardPage = () => {
     return (
         <div className="dashboard-container">
             <div className="card mb-4">
-                <div className="flex justify-between items-center mb-4">
+                <div className="dashboard-header">
                     <div>
                         <h2 className="mb-1">My Dashboard</h2>
                         <p className="text-secondary mb-0">Manage and track all your shortened links</p>
                     </div>
-                    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                    <div className="dashboard-buttons">
                         <button onClick={() => navigate("/")} className="btn btn-success btn-small">
                             ➕ Create New Link
                         </button>
                         <button onClick={handleRefresh} className="btn btn-secondary btn-small">
                             🔄 Refresh
                         </button>
-                        <div style={{ fontSize: "2rem" }}>📊</div>
+                        <div className="dashboard-icon">📊</div>
                     </div>
                 </div>
             </div>
