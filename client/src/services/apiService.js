@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 /**
  * @desc    Sends a long URL to the backend API to be shortened
  * @param   {string} longUrl The URL that the user wants to shorten
@@ -12,7 +14,7 @@ export const createShortUrl = async (longUrl) => {
             ? { headers: { "x-auth-token": token } }
             : {};
 
-        const response = await axios.post("/api/shorten", { longUrl }, config);
+        const response = await axios.post(`${API_URL}/shorten`, { longUrl }, config);
         return response.data;
     } catch (error) {
         if (error.response && error.response.data) {

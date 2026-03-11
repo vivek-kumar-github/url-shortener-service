@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "/api/links/";
+const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/links/`;
 
 /**
  * @desc    Fetches all links associated with the currently authenticated user.

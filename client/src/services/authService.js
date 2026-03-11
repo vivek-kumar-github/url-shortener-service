@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "/api/auth/";
+const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/auth/`;
 
 /**
  * @desc    Register a new user by sending their data to the backend
